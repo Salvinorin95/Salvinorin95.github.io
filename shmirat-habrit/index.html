@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1fb5a6">
+<title>שמירת הברית עברה לכתובת חדשה</title>
+<link rel="canonical" href="https://shmirat-habrit.salvinorinab.workers.dev/">
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px;
+    background: #f3e7cf; color: #3a2a18; font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Heebo, Arial, sans-serif; }
+  main { max-width: 34rem; width: 100%; background: #fffaf0; border: 2px solid #1fb5a6; border-radius: 22px; padding: 26px 24px; box-shadow: 0 10px 30px rgba(58, 42, 24, .12); }
+  h1 { margin: 0 0 .6rem; font-size: 1.45rem; line-height: 1.3; }
+  p { margin: .6rem 0; }
+  a { color: #0f7f74; word-break: break-all; }
+  button { font: inherit; font-weight: 700; border: 0; border-radius: 999px; padding: .75rem 1.3rem; cursor: pointer; }
+  .go { background: #1fb5a6; color: #fff; width: 100%; margin: .6rem 0; }
+  .soft { background: #d9f3ef; color: #0d5f57; }
+  .danger { background: #f6ded6; color: #8a2b12; }
+  .small { font-size: .9rem; color: #6b5640; }
+  .status { min-height: 1.6em; font-weight: 600; }
+  details { margin-top: 1rem; background: #f7efdf; border-radius: 14px; padding: .6rem .9rem; }
+  summary { cursor: pointer; font-weight: 600; }
+  ol { padding-inline-start: 1.3rem; margin: .6rem 0; }
+  li { margin: .5rem 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1 data-t="title">שמירת הברית עברה לכתובת חדשה</h1>
+  <p id="auto" data-t="auto">מעבירים אותך לכתובת החדשה…</p>
+  <section id="has-data" hidden>
+    <p data-t="data"></p>
+    <button class="go" id="move" type="button" data-t="move"></button>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <button class="danger" id="wipe" type="button" data-t="wipe" hidden></button>
+    <details id="manual">
+      <summary data-t="manual"></summary>
+      <ol>
+        <li><button class="soft" id="backup" type="button" data-t="step1"></button></li>
+        <li data-t="step2"></li>
+      </ol>
+    </details>
+  </section>
+  <p class="small"><span data-t="where">הכתובת החדשה:</span> <a id="link" dir="ltr" href="https://shmirat-habrit.salvinorinab.workers.dev/">https://shmirat-habrit.salvinorinab.workers.dev/</a></p>
+</main>
+<script>
+(function () {
+  "use strict";
+  var NEW = "https://shmirat-habrit.salvinorinab.workers.dev/";
+  var NEW_ORIGIN = new URL(NEW).origin;
+  var T = {
+    he: {
+      title: "שמירת הברית עברה לכתובת חדשה",
+      auto: "מעבירים אותך לכתובת החדשה…",
+      data: "ההתקדמות שלך שמורה בדפדפן הזה, בכתובת הישנה. לחיצה אחת מעבירה אותה לכתובת החדשה, ישירות מהדפדפן לדפדפן, בלי שרת.",
+      move: "להעביר את ההתקדמות ולהמשיך",
+      waiting: "פותחים את הכתובת החדשה…",
+      moved: "✓ ההתקדמות עברה. אפשר לסגור את הלשונית הזאת ולהמשיך בכתובת החדשה, וכדאי להוסיף אותה למסך הבית.",
+      kept: "בכתובת החדשה כבר היו נתונים, אז לא החלפנו אותם. אם צריך, אפשר להעביר ידנית עם גיבוי.",
+      error: "ההעברה לא הצליחה. אפשר להעביר ידנית עם גיבוי:",
+      failed: "החיבור לא הצליח (זה קורה באפליקציה שהותקנה במסך הבית באייפון). אפשר להעביר ידנית עם גיבוי:",
+      blocked: "הדפדפן חסם את החלון החדש. אפשר לנסות שוב או להעביר ידנית עם גיבוי:",
+      manual: "העברה ידנית עם גיבוי",
+      step1: "להוריד גיבוי",
+      step2: "לפתוח את הכתובת החדשה ← הגדרות ← ייבוא גיבוי ← לבחור את הקובץ שירד.",
+      wipe: "למחוק את העותק בכתובת הישנה",
+      wipe_confirm: "למחוק את הנתונים מהכתובת הישנה? בכתובת החדשה הם נשארים.",
+      wiped: "העותק בכתובת הישנה נמחק.",
+      where: "הכתובת החדשה:"
+    },
+    en: {
+      title: "Shmirat HaBrit has moved to a new address",
+      auto: "Taking you to the new address…",
+      data: "Your progress is saved in this browser, at the old address. One tap moves it to the new address, straight from browser to browser, with no server.",
+      move: "Move my progress and continue",
+      waiting: "Opening the new address…",
+      moved: "✓ Your progress moved. You can close this tab and continue at the new address. Add it to your home screen.",
+      kept: "The new address already had data, so we didn't replace it. If needed, move it by hand with a backup.",
+      error: "The move didn't work. You can move it by hand with a backup:",
+      failed: "It couldn't connect (this happens in an app installed on an iPhone home screen). Move it by hand with a backup:",
+      blocked: "The browser blocked the new window. Try again, or move it by hand with a backup:",
+      manual: "Move by hand with a backup",
+      step1: "Download backup",
+      step2: "Open the new address → Settings → Import backup → choose the downloaded file.",
+      wipe: "Delete the copy at the old address",
+      wipe_confirm: "Delete the data from the old address? It stays at the new address.",
+      wiped: "The copy at the old address was deleted.",
+      where: "New address:"
+    }
+  };
+  function read(k) { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (e) { return null; } }
+  function plain(v) { return !!v && typeof v === "object" && !Array.isArray(v); }
+  function meaningful(d) {
+    return plain(d) && (Object.keys(d.days || {}).length > 0 || Object.keys(d.checkins || {}).length > 0 ||
+      Object.keys(d.checks || {}).some(function (k) { return d.checks[k]; }) || (Array.isArray(d.resets) && d.resets.length > 0) ||
+      !!d.goal || !!(d.partner && d.partner.name));
+  }
+  var app = read("shmira-v1");
+  var lang = (app && (app.lang === "he" || app.lang === "en")) ? app.lang : (/^(he|iw)/i.test(navigator.language || "he") ? "he" : "en");
+  var t = T[lang];
+  document.documentElement.lang = lang; document.documentElement.dir = lang === "he" ? "rtl" : "ltr";
+  document.title = t.title;
+  Array.prototype.forEach.call(document.querySelectorAll("[data-t]"), function (el) { el.textContent = t[el.getAttribute("data-t")]; });
+
+  // Retire the old offline app on this path only (other apps share this origin).
+  try {
+    navigator.serviceWorker && navigator.serviceWorker.getRegistrations().then(function (rs) {
+      rs.forEach(function (r) { if (r.scope === location.origin + "/shmirat-habrit/") r.unregister(); });
+    }).catch(function () {});
+  } catch (e) {}
+
+  if (!meaningful(app)) { location.replace(NEW + location.search + location.hash); return; }
+
+  document.getElementById("auto").hidden = true;
+  document.getElementById("has-data").hidden = false;
+  var status = document.getElementById("status"), manual = document.getElementById("manual"), wipe = document.getElementById("wipe");
+  var done = false, timer = null;
+  function say(msg, openManual) { status.textContent = msg; if (openManual) manual.open = true; }
+
+  document.getElementById("move").addEventListener("click", function () {
+    done = false; say(t.waiting);
+    var w = window.open(NEW + "?moved=1", "_blank");
+    if (!w) { say(t.blocked, true); return; }
+    clearTimeout(timer);
+    timer = setTimeout(function () { if (!done) say(t.failed, true); }, 12000);
+  });
+  window.addEventListener("message", function (e) {
+    if (e.origin !== NEW_ORIGIN || !plain(e.data)) return;
+    if (e.data.type === "shmira-ready") {
+      e.source.postMessage({ type: "shmira-move", app: read("shmira-v1"), count: read("shmira-count") }, NEW_ORIGIN);
+    } else if (e.data.type === "shmira-moved") {
+      done = true; clearTimeout(timer);
+      var r = e.data.result;
+      say(t[r] || t.error, r !== "moved");
+      wipe.hidden = r !== "moved";
+    }
+  });
+  document.getElementById("backup").addEventListener("click", function () {
+    var data = Object.assign({ app: "shmirat-habrit", exportedAt: new Date().toISOString() }, read("shmira-v1"), { v: 2 });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+    a.download = "shmirat-habrit-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+  wipe.addEventListener("click", function () {
+    if (!confirm(t.wipe_confirm)) return;
+    localStorage.removeItem("shmira-v1"); localStorage.removeItem("shmira-v1:previous"); localStorage.removeItem("shmira-count");
+    wipe.hidden = true; say(t.wiped);
+  });
+})();
+</script>
+</body>
+</html>
